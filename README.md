@@ -25,7 +25,7 @@ The calling root configuration must configure the AzureRM provider and authentic
 
 ```hcl
 module "network" {
-  source = "git::https://github.com/cristianrdgzzz/terraform-module-azurerm-network.git?ref=v0.1.0"
+  source = "git::https://github.com/Terraformcristianrdgzzz/terraform-module-azurerm-network.git?ref=v0.1.0"
 
   resource_group_name = "rg-terraformdeployments-stage"
   location            = "East US"
