@@ -25,7 +25,7 @@ The calling root configuration must configure the AzureRM provider and authentic
 
 ```hcl
 module "network" {
-  source = "git::https://github.com/Terraformcristianrdgzzz/terraform-module-azurerm-network.git?ref=v0.1.0"
+  source = "git::https://github.com/Terraformcristianrdgzzz/terraform-module-azurerm-network.git?ref=v0.2.0"
 
   resource_group_name = "rg-terraformdeployments-stage"
   location            = "East US"
@@ -38,7 +38,7 @@ module "network" {
 }
 ```
 
-The `v0.1.0` tag is published in this repository. Pin consumers to a published tag rather than the moving `main` branch.
+The `v0.2.0` tag includes subnet containment preconditions and Azure resource postconditions. Pin consumers to a published tag rather than the moving `main` branch.
 
 ## Examples and tests
 
