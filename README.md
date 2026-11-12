@@ -38,7 +38,21 @@ module "network" {
 }
 ```
 
-The `v0.1.0` tag is an example. The caller must reference a tag that has actually been created in this repository.
+The `v0.1.0` tag is published in this repository. Pin consumers to a published tag rather than the moving `main` branch.
+
+## Examples and tests
+
+- [`examples/basic`](./examples/basic) shows a root configuration that calls this module and can be planned or applied to Azure.
+- [`tests/network.tftest.hcl`](./tests/network.tftest.hcl) checks outputs and CIDR validation using a mocked AzureRM provider. Tests do not create Azure resources.
+
+Run the unit tests with Terraform 1.7.0 or later:
+
+```shell
+terraform init -backend=false
+terraform test
+```
+
+Terraform's mocked-provider test support requires 1.7.0 or later. The module itself remains compatible with Terraform 1.5.0 and later.
 
 ## Inputs
 
