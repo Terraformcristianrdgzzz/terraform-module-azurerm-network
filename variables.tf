@@ -33,8 +33,8 @@ variable "vnet_address_space" {
   type        = list(string)
 
   validation {
-    condition     = length(var.vnet_address_space) > 0 && alltrue([for prefix in var.vnet_address_space : can(cidrnetmask(prefix))])
-    error_message = "vnet_address_space must contain one or more valid IPv4 CIDR prefixes."
+    condition     = length(var.vnet_address_space) > 0 && alltrue([for prefix in var.vnet_address_space : can(cidrnetmask(prefix)) && try(cidrhost(prefix, 0) == split("/", prefix)[0], false)])
+    error_message = "vnet_address_space must contain one or more canonical IPv4 CIDR network prefixes."
   }
 }
 
@@ -53,7 +53,7 @@ variable "subnet_prefixes" {
   type        = list(string)
 
   validation {
-    condition     = length(var.subnet_prefixes) > 0 && alltrue([for prefix in var.subnet_prefixes : can(cidrnetmask(prefix))])
-    error_message = "subnet_prefixes must contain one or more valid IPv4 CIDR prefixes."
+    condition     = length(var.subnet_prefixes) > 0 && alltrue([for prefix in var.subnet_prefixes : can(cidrnetmask(prefix)) && try(cidrhost(prefix, 0) == split("/", prefix)[0], false)])
+    error_message = "subnet_prefixes must contain one or more canonical IPv4 CIDR network prefixes."
   }
 }
