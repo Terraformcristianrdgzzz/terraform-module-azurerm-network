@@ -11,11 +11,21 @@ variable "resource_group_name" {
 variable "location" {
   description = "Azure region for the virtual network."
   type        = string
+
+  validation {
+    condition     = length(trimspace(var.location)) > 0
+    error_message = "location must not be empty."
+  }
 }
 
 variable "vnet_name" {
   description = "Name of the virtual network."
   type        = string
+
+  validation {
+    condition     = length(trimspace(var.vnet_name)) > 0
+    error_message = "vnet_name must not be empty."
+  }
 }
 
 variable "vnet_address_space" {
@@ -31,6 +41,11 @@ variable "vnet_address_space" {
 variable "subnet_name" {
   description = "Name of the subnet."
   type        = string
+
+  validation {
+    condition     = length(trimspace(var.subnet_name)) > 0
+    error_message = "subnet_name must not be empty."
+  }
 }
 
 variable "subnet_prefixes" {
