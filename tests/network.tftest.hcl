@@ -1,13 +1,15 @@
 mock_provider "azurerm" {
   mock_resource "azurerm_virtual_network" {
     defaults = {
-      id = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg-test/providers/Microsoft.Network/virtualNetworks/vnet-test"
+      id            = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg-test/providers/Microsoft.Network/virtualNetworks/vnet-test"
+      address_space = ["10.10.0.0/16"]
     }
   }
 
   mock_resource "azurerm_subnet" {
     defaults = {
-      id = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg-test/providers/Microsoft.Network/virtualNetworks/vnet-test/subnets/snet-test"
+      id               = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/rg-test/providers/Microsoft.Network/virtualNetworks/vnet-test/subnets/snet-test"
+      address_prefixes = ["10.10.1.0/24"]
     }
   }
 }
@@ -65,6 +67,26 @@ run "rejects_invalid_subnet_cidr" {
 
   variables {
     subnet_prefixes = ["not-a-cidr"]
+  }
+
+  expect_failures = [var.subnet_prefixes]
+}
+
+run "rejects_subnet_outside_vnet" {
+  command = plan
+
+  variables {
+    subnet_prefixes = ["10.11.1.0/24"]
+  }
+
+  expect_failures = [azurerm_subnet.subnet]
+}
+
+run "rejects_misaligned_subnet_prefix" {
+  command = plan
+
+  variables {
+    subnet_prefixes = ["10.10.1.1/24"]
   }
 
   expect_failures = [var.subnet_prefixes]
