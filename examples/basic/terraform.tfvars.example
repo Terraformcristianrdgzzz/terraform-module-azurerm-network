@@ -1,0 +1,6 @@
+resource_group_name = "rg-terraform-demo"
+location            = "East US"
+vnet_name           = "vnet-demo"
+vnet_address_space  = ["10.10.0.0/16"]
+subnet_name         = "snet-web"
+subnet_prefixes     = ["10.10.1.0/24"]
